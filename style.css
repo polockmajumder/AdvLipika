@@ -160,7 +160,8 @@ nav { display: flex; justify-content: center; gap: 50px; max-width: 90%; margin:
     }
 
     .text-content { 
-        width: 100%; 
+        width: 100%;
+        padding-bottom: 150px;
     }
 
 
