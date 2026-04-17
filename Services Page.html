@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <title>Services | Lipika Rani Sen</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #eeebdd;
+            font-family: "Manrope", sans-serif;
+            color: #950000;
+            overflow-x: hidden;
+        }
+
+        /* --- Animations from Main Page --- */
+        @keyframes tracing-glow {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes infinite-spin {
+            from { transform: rotate(45deg); }
+            to { transform: rotate(405deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Top Navigation (Identical to Main) */
+        nav {
+            background-color: #470000;
+            display: flex;
+            width: 100%;
+            height: 60px;
+            box-shadow: 0 0 30px #810000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #eeebdd;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            border-right: 2px solid #eeebdd;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s ease;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background-color: #950000;
+            z-index: -1;
+            transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        nav a:hover::before { height: 100%; }
+
+        nav a span {
+            position: relative;
+            z-index: 2;
+            transition: letter-spacing 0.4s ease, transform 0.4s ease;
+            display: inline-block;
+        }
+
+        nav a:hover span {
+            letter-spacing: 3px;
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        nav a:last-child { border-right: none; }
+
+        /* Header Section */
+        .service-header {
+            padding: 80px 20px 40px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .service-header h1 {
+            font-size: 5rem;
+            color: #af0000;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .service-header .subtitle {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #470000;
+            letter-spacing: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .square {
+            width: 12px;
+            height: 12px;
+            background-color: #af0e0e;
+            transform: rotate(45deg);
+            animation: infinite-spin 2s infinite linear;
+        }
+
+        /* Divider */
+        .divider {
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, #af0e0e 0%, #ff4d4d 50%, #af0e0e 100%);
+            background-size: 200% 100%;
+            margin: 20px auto 60px;
+            animation: tracing-glow 3s linear infinite;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .service-card {
+            background-color: #f7f5f0;
+            border: 2px solid #810000;
+            padding: 40px;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(149, 0, 0, 0.05), transparent);
+            transition: 0.5s;
+        }
+
+        .service-card:hover::after {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background-color: #470000;
+            color: #eeebdd;
+            box-shadow: 0 20px 40px rgba(71, 0, 0, 0.2);
+        }
+
+        .service-card h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            border-left: 5px solid #af0e0e;
+            padding-left: 15px;
+            transition: border-color 0.5s ease;
+        }
+
+        .service-card:hover h2 {
+            border-left-color: #eeebdd;
+        }
+
+        .service-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .service-card .icon-num {
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            font-size: 6rem;
+            font-weight: 900;
+            color: rgba(149, 0, 0, 0.05);
+            transition: color 0.5s ease;
+        }
+
+        .service-card:hover .icon-num {
+            color: rgba(238, 235, 221, 0.1);
+        }
+
+        /* Footer Call to Action */
+        .cta-section {
+            background-color: #470000;
+            color: #eeebdd;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 40px;
+            border: 2px solid #eeebdd;
+            color: #eeebdd;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #eeebdd;
+            color: #470000;
+        }
+
+
+
+
+
+
+
+        /* --- MOBILE & TABLET RESPONSIVENESS --- */
+
+        /* Tablets and smaller screens */
+        @media (max-width: 992px) {
+            .service-header h1 { font-size: 4rem; }
+            .services-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                padding: 0 40px;
+            }
+        }
+
+        /* Mobile Phones - Aesthetic Overhaul */
+        @media (max-width: 600px) {
+            /* Navigation Grid */
+            nav { 
+                height: auto; 
+                flex-wrap: wrap; 
+                background: rgba(71, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+            }
+            
+            nav a { 
+                flex: 1 1 33.33%; 
+                height: 50px; 
+                border-bottom: 1px solid rgba(238, 235, 221, 0.2); 
+                border-right: 1px solid rgba(238, 235, 221, 0.2); 
+                font-size: 0.75rem; 
+            }
+
+            /* Header Refinement */
+            .service-header { padding: 60px 15px 30px; }
+            
+            .service-header h1 { 
+                font-size: 2.8rem; 
+                letter-spacing: -1px; 
+            }
+
+            .service-header .subtitle { 
+                font-size: 0.8rem; 
+                letter-spacing: 2px; 
+            }
+
+            .divider { width: 90%; margin-bottom: 40px; }
+
+            /* Grid to Single Column */
+            .services-grid { 
+                grid-template-columns: 1fr; 
+                gap: 20px;
+                padding: 0 20px;
+                margin-bottom: 60px;
+            }
+
+            /* Card Aesthetic Enhancements */
+            .service-card { 
+                padding: 30px 25px; 
+                border-radius: 15px; /* Softer look for mobile */
+            }
+
+            .service-card h2 { font-size: 1.4rem; }
+            .service-card p { font-size: 0.95rem; }
+
+            /* Subtle background number */
+            .service-card .icon-num { 
+                font-size: 4rem; 
+                bottom: 5px; 
+                right: 15px; 
+            }
+
+            /* CTA Section */
+            .cta-section { padding: 50px 20px; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-btn { 
+                width: 100%; 
+                max-width: 300px; 
+                padding: 18px;
+                font-size: 0.9rem;
+            }
+        }
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="./index.html"><span>HOME</span></a>
+        <a href="./Services Page.html"><span>SERVICES</span></a>
+        <a href="#"><span>ABOUT</span></a>
+        <a href="#"><span>CONTACT US</span></a>
+        <a href="#"><span>LOCATION</span></a>
+    </nav>
+
+    <div class="service-header">
+        <div class="subtitle">
+            <div class="square"></div>
+            PROFESSIONAL LEGAL EXPERTISE
+            <div class="square"></div>
+        </div>
+        <h1>Legal Services</h1>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="services-grid">
+        <div class="service-card">
+            <h2>Legal Drafting</h2>
+            <p>Comprehensive drafting services including Deed of Sale, Deed of Mortgage, Deed of Agreement, and all specialized legal applications tailored to your requirements.</p>
+            <div class="icon-num">01</div>
+        </div>
+
+        <div class="service-card">
+            <h2>Court Procedures</h2>
+            <p>Expert guidance through intricate Court Procedures and Court Hearing Procedures, ensuring your case follows the strict protocols of the Bangladesh judicial system.</p>
+            <div class="icon-num">02</div>
+        </div>
+
+        <div class="service-card">
+            <h2>Trial Advocacy</h2>
+            <p>Masterful execution of Examination in Chief, Cross-examination, and Argument. We build a narrative that stands up to the highest level of judicial scrutiny.</p>
+            <div class="icon-num">03</div>
+        </div>
+
+        <div class="service-card">
+            <h2>Litigation Support</h2>
+            <p>End-to-end Case Drafting & Filing, alongside Petition drafting and hearing. We manage the paperwork so you can focus on the results.</p>
+            <div class="icon-num">04</div>
+        </div>
+
+        <div class="service-card">
+            <h2>Bail & Criminal Defense</h2>
+            <p>Specialized Bail Petition hearings and immediate legal intervention for urgent criminal matters with a focus on protecting individual liberties.</p>
+            <div class="icon-num">05</div>
+        </div>
+
+        <div class="service-card">
+            <h2>Custom Solutions</h2>
+            <p>Handling all sorts of legal drafting and complex legal queries. If it requires a sharp legal mind and a precise pen, we provide the solution.</p>
+            <div class="icon-num">06</div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Ready to secure your legal future?</h2>
+        <p>Expert consultation is just a message away.</p>
+        <a href="http://wa.me/+8801920101914" class="cta-btn">CONSULT VIA WHATSAPP</a>
+    </div>
+
+</body>
+</html>

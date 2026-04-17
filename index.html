@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist:wght@100..900&family=Goudy+Bookletter+1911&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Manrope:wght@200..800&family=Noto+Sans+Bengali:wght@100..900&family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <title>Polock Majumder</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #eeebdd;
+            font-family: "Manrope", sans-serif;
+            color: #950000;
+            overflow-x: hidden;
+        }
+
+        /* --- Animations --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes tracing-glow {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes infinite-spin {
+            from { transform: rotate(45deg); }
+            to { transform: rotate(405deg); }
+        }
+
+        @keyframes pulse-subtle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* New Reveal Animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Top Navigation */
+        nav {
+            background-color: #470000;
+            display: flex;
+            width: 100%;
+            height: 60px;
+            box-shadow: 0 0 30px #810000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #eeebdd;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            border-right: 2px solid #eeebdd;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s ease;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background-color: #950000;
+            z-index: -1;
+            transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        nav a span {
+            position: relative;
+            z-index: 2;
+            transition: letter-spacing 0.4s ease, transform 0.4s ease;
+            display: inline-block;
+        }
+
+        nav a:hover::before { height: 100%; }
+        nav a:hover span {
+            letter-spacing: 3px;
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        nav a:last-child { border-right: none; }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Hero / Profile Section with Reveal */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5%;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease-out forwards; /* Reveal Animation */
+            transition: transform 0.5s ease;
+        }
+
+        /* Float animation handled on the wrapper or internal image to avoid conflict with fadeInUp */
+        .hero-float-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5%;
+            width: 100%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero:hover { transform: scale(1.02); }
+
+        .profile-pic {
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background-color: #840000;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border: 4px solid transparent;
+            background-image: linear-gradient(#840000, #840000), conic-gradient(from 0deg, transparent 0%, #af0e0e 50%, transparent 100%);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            animation: pulse-subtle 4s infinite ease-in-out;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .profile-pic:hover img { transform: scale(1.1); }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info h3 { font-size: 2rem; color: #e14b4b; font-weight: 800; margin-bottom: 5px; }
+        .info h1 { font-size: 7rem; color: #af0000; font-weight: 700; line-height: 1; margin-bottom: 15px; letter-spacing: -1px; }
+        .info h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 30px; }
+        .info p { font-size: 1.5rem; font-weight: 600; line-height: 1.6; }
+
+        /* Divider with Staggered Reveal */
+        .divider {
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #af0e0e 0%, #ff4d4d 50%, #af0e0e 100%);
+            background-size: 200% 100%;
+            box-shadow: 0 0 20px #810000;
+            margin: 0 auto 50px auto;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards, tracing-glow 3s linear infinite; /* Staggered */
+            opacity: 0; /* Start hidden for reveal */
+        }
+
+        /* Bottom Section with Staggered Reveal */
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards; /* Staggered */
+            opacity: 0; /* Start hidden for reveal */
+        }
+
+        .mission { display: flex; flex-direction: column; gap: 20px; }
+        .mission-title { display: flex; align-items: center; gap: 12px; font-size: 2.5rem; font-weight: 800; color: #bc0000; }
+
+        .square {
+            width: 18px;
+            height: 18px;
+            background-color: #af0e0e;
+            transform: rotate(45deg);
+            animation: infinite-spin 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+
+        .quotes-container { display: flex; gap: 12px; }
+        .quotes-lines { display: flex; gap: 4px; }
+        .line-thick, .line-thin { width: 4px; background-color: #af0e0e; animation: pulse-subtle 2s infinite alternate ease-in-out; }
+        .quotes-text { font-size: 1.5rem; font-weight: 600; line-height: 1.6; }
+
+        /* Buttons */
+        .buttons { display: flex; flex-direction: column; gap: 20px; }
+        .btn {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #af0e0e;
+            border-radius: 40px;
+            color: #af0e0e;
+            text-decoration: none;
+            height: 55px;
+            width: 240px;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #af0e0e;
+            z-index: -1;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .btn:hover { color: #eeebdd; }
+        .btn:hover::after { transform: translateY(0); }
+        .btn img { width: 30px; height: 30px; transition: filter 0.4s ease; }
+        .btn:hover img { filter: brightness(0) invert(1); }
+
+        /* --- RESPONSIVE QUERIES --- */
+
+        @media (max-width: 1200px) {
+            .info h1 { font-size: 5rem; }
+            .profile-pic { width: 350px; height: 350px; }
+            .bottom-section { gap: 40px; }
+        }
+
+        @media (max-width: 992px) {
+            nav a { font-size: 0.9rem; }
+            .hero-float-wrapper { flex-direction: column; text-align: center; gap: 30px; }
+            .info h1 { font-size: 4rem; }
+            .info h2 { font-size: 2rem; }
+            .bottom-section { flex-direction: column; align-items: center; text-align: center; }
+            .mission-title { justify-content: center; font-size: 2rem; }
+            .quotes-container { justify-content: center; }
+            .buttons { width: 100%; align-items: center; margin-top: 30px; }
+        }
+
+        @media (max-width: 600px) {
+           nav { 
+                height: auto; 
+                flex-wrap: wrap; 
+                background: rgba(71, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+            }
+            
+            nav a { 
+                flex: 1 1 33.33%; 
+                height: 50px; 
+                border-bottom: 1px solid rgba(238, 235, 221, 0.2); 
+                border-right: 1px solid rgba(238, 235, 221, 0.2); 
+                font-size: 0.75rem; 
+            }
+
+            .container { padding: 60px 15px; }
+            .profile-pic { width: 250px; height: 250px; }
+            .info h1 { font-size: 2.4rem; }
+            .info h2 { font-size: 1.4rem; margin-bottom: 15px; }
+            .info h3 {font-size: 1rem;}
+            .info p { font-size: 1rem; }
+            
+            .mission-title { font-size: 1.4rem; }
+            .quotes-text { font-size: 1.1rem; }
+            .btn { width: 100%; max-width: 280px; }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="./index.html"><span>HOME</span></a>
+        <a href="./Services Page.html"><span>SERVICES</span></a>
+        <a href="#"><span>ABOUT</span></a>
+        <a href="#"><span>CONTACT US</span></a>
+        <a href="#"><span>LOCATION</span></a>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <div class="hero-float-wrapper">
+                <div class="profile-pic">
+                    <img src="./Assets/Lipika Photo.png" alt="Lipika Rani Sen">
+                </div>
+                <div class="info">
+                    <h3>ADVOCATE</h3>
+                    <h1>Lipika Rani Sen</h1>
+                    <h2>SUPREME COURT OF BANGLADESH</h2>
+                    <p>Mobile : +8801920101914</p>
+                    <p>Email : bornolipika@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="bottom-section">
+            <div class="mission">
+                <div class="mission-title">
+                    <div class="square"></div>
+                    JUSTICE WITHOUT COMPROMISE
+                </div>
+                <div class="quotes-container">
+                    <div class="quotes-lines">
+                        <div class="line-thick"></div>
+                        <div class="line-thin"></div>
+                    </div>
+                    <div class="quotes-text">
+                       <p> "Smart Solutions. Serious Advocacy. Dhaka's Top Legal Minds."</p>
+                        <p>"Justice is Personal. We Make It Our Mission."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <a href="#" class="btn">
+                    <img src="./Assets/Maps Icon.png" alt="Google Map Icon">
+                    Chamber Location
+                </a>
+                <a href="http://wa.me/+8801920101914" class="btn">
+                    <img id="whats-icon" src="./Assets/Whatsapp Icon.png" alt="WhatsApp Icon">
+                    Whats App
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
